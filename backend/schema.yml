@@ -1,0 +1,563 @@
+openapi: 3.0.3
+info:
+  title: ''
+  version: 0.0.0
+paths:
+  /api/v1/books/:
+    get:
+      operationId: api_v1_books_list
+      parameters:
+      - name: limit
+        required: false
+        in: query
+        description: Number of results to return per page.
+        schema:
+          type: integer
+      - name: offset
+        required: false
+        in: query
+        description: The initial index from which to return the results.
+        schema:
+          type: integer
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
+      - in: query
+        name: price
+        schema:
+          type: number
+      - in: query
+        name: price__gt
+        schema:
+          type: number
+      - in: query
+        name: price__gte
+        schema:
+          type: number
+      - in: query
+        name: price__lt
+        schema:
+          type: number
+      - in: query
+        name: price__lte
+        schema:
+          type: number
+      - in: query
+        name: published_year
+        schema:
+          type: string
+          format: date
+      - in: query
+        name: published_year__gt
+        schema:
+          type: string
+          format: date
+      - in: query
+        name: published_year__gte
+        schema:
+          type: string
+          format: date
+      - in: query
+        name: published_year__lt
+        schema:
+          type: string
+          format: date
+      - in: query
+        name: published_year__lte
+        schema:
+          type: string
+          format: date
+      - in: query
+        name: publisher__name__icontains
+        schema:
+          type: string
+      - name: search
+        required: false
+        in: query
+        description: A search term.
+        schema:
+          type: string
+      - in: query
+        name: title__icontains
+        schema:
+          type: string
+      tags:
+      - api
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedBookReadList'
+          description: ''
+    post:
+      operationId: api_v1_books_create
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BookWrite'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/BookWrite'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/BookWrite'
+        required: true
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BookWrite'
+          description: ''
+  /api/v1/books/{id}/:
+    get:
+      operationId: api_v1_books_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - api
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BookRead'
+          description: ''
+    put:
+      operationId: api_v1_books_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BookRead'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/BookRead'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/BookRead'
+        required: true
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BookRead'
+          description: ''
+    patch:
+      operationId: api_v1_books_partial_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedBookRead'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedBookRead'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedBookRead'
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BookRead'
+          description: ''
+    delete:
+      operationId: api_v1_books_destroy
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - api
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '204':
+          description: No response body
+  /api/v1/publishers/:
+    get:
+      operationId: api_v1_publishers_list
+      parameters:
+      - name: limit
+        required: false
+        in: query
+        description: Number of results to return per page.
+        schema:
+          type: integer
+      - name: offset
+        required: false
+        in: query
+        description: The initial index from which to return the results.
+        schema:
+          type: integer
+      tags:
+      - api
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedPublisherList'
+          description: ''
+    post:
+      operationId: api_v1_publishers_create
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Publisher'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Publisher'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Publisher'
+        required: true
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Publisher'
+          description: ''
+  /api/v1/publishers/{id}/:
+    get:
+      operationId: api_v1_publishers_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - api
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Publisher'
+          description: ''
+    put:
+      operationId: api_v1_publishers_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Publisher'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Publisher'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Publisher'
+        required: true
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Publisher'
+          description: ''
+    patch:
+      operationId: api_v1_publishers_partial_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedPublisher'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedPublisher'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedPublisher'
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Publisher'
+          description: ''
+    delete:
+      operationId: api_v1_publishers_destroy
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - api
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '204':
+          description: No response body
+components:
+  schemas:
+    BookRead:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        publisher:
+          type: string
+          readOnly: true
+        title:
+          type: string
+          maxLength: 200
+        author:
+          type: string
+          maxLength: 100
+        published_year:
+          type: string
+          format: date
+        price:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,6}(?:\.\d{0,2})?$
+      required:
+      - author
+      - id
+      - price
+      - published_year
+      - publisher
+      - title
+    BookWrite:
+      type: object
+      properties:
+        publisher:
+          type: integer
+        title:
+          type: string
+          maxLength: 200
+        author:
+          type: string
+          maxLength: 100
+        published_year:
+          type: string
+          format: date
+        price:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,6}(?:\.\d{0,2})?$
+      required:
+      - author
+      - price
+      - published_year
+      - publisher
+      - title
+    PaginatedBookReadList:
+      type: object
+      required:
+      - count
+      - results
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?offset=400&limit=100
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?offset=200&limit=100
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/BookRead'
+    PaginatedPublisherList:
+      type: object
+      required:
+      - count
+      - results
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?offset=400&limit=100
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?offset=200&limit=100
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/Publisher'
+    PatchedBookRead:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        publisher:
+          type: string
+          readOnly: true
+        title:
+          type: string
+          maxLength: 200
+        author:
+          type: string
+          maxLength: 100
+        published_year:
+          type: string
+          format: date
+        price:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,6}(?:\.\d{0,2})?$
+    PatchedPublisher:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        name:
+          type: string
+        country:
+          type: string
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
+    Publisher:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        name:
+          type: string
+        country:
+          type: string
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
+      required:
+      - country
+      - created_at
+      - id
+      - name
+      - updated_at
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic
+    cookieAuth:
+      type: apiKey
+      in: cookie
+      name: sessionid
