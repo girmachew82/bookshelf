@@ -8,8 +8,8 @@ group_list = GroupViewSet.as_view({'get': 'list', 'post': 'create'})
 group_detail = GroupViewSet.as_view({'get': 'retrieve', 'put': 'update', 'delete': 'destroy'})
 
 urlpatterns = [
-    path('publishers/', PublisherListCreateAPIView.as_view(), name='list-create-publisher' ),
-    path('publishers/<int:pk>/', PublisherRetriveUpdateDestroyAPIView.as_view(), name='retrive-update-destroy-publisher'),
+    path('publishers/', PublisherListCreateAPIView.as_view(), name='publisher-list' ),
+    path('publishers/<int:pk>/', PublisherRetriveUpdateDestroyAPIView.as_view(), name='publisher-detail'),
     path('books/',BookListCreateAPIView.as_view(), name='list-create-books'),
     path('books/<int:pk>/',BookRetriveUpdateDestroyAPIView.as_view(),name='retrive-update-destroy-book'),
     path('users/', user_list, name='user-list'),
